@@ -6,6 +6,9 @@
 #include "GameFramework/Pawn.h"
 #include "Ball.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
+
 UCLASS()
 class PAINTERBALL_API ABall : public APawn
 {
@@ -29,7 +32,13 @@ public:
 
 private:
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent* StaticMesh;
+
+	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = true))
+	USpringArmComponent* SpringArm;
+
+	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = true))
+	UCameraComponent* Camera;
 
 };

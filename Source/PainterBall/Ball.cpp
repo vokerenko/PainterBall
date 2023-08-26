@@ -2,6 +2,8 @@
 
 
 #include "Ball.h"
+#include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 
 // Sets default values
 ABall::ABall()
@@ -12,6 +14,12 @@ ABall::ABall()
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere"));
 	SetRootComponent(StaticMesh);
 	StaticMesh->SetSimulatePhysics(true);
+
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	SpringArm->SetupAttachment(StaticMesh);
+
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	Camera->SetupAttachment(SpringArm);
 }
 
 // Called when the game starts or when spawned
