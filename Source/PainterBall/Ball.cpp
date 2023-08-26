@@ -10,7 +10,7 @@ ABall::ABall()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	
+
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere"));
 	SetRootComponent(StaticMesh);
 	StaticMesh->SetSimulatePhysics(true);
@@ -20,6 +20,7 @@ ABall::ABall()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
+
 }
 
 // Called when the game starts or when spawned
