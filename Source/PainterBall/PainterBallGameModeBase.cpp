@@ -2,17 +2,23 @@
 
 
 #include "PainterBallGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 
 void APainterBallGameModeBase::ChangeMarkedTargetsCount(bool bSubtract)
 {
 	if (!bSubtract)
 	{
 		MarkedTargetsCount++;
+		if (MarkedTargetsCount == TotalTargetsCount)
+		{
+			OnWin();
+		}
 	}
 	else
 	{
 		MarkedTargetsCount--;
 	}
+
 }
 void APainterBallGameModeBase::ChangeMarkedPurifiersCount(bool bSubtract)
 {
@@ -24,5 +30,6 @@ void APainterBallGameModeBase::ChangeMarkedPurifiersCount(bool bSubtract)
 	{
 		MarkedPurifiersCount--;
 	}
+	
 }
 

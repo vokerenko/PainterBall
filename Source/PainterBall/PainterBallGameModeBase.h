@@ -16,11 +16,21 @@ class PAINTERBALL_API APainterBallGameModeBase : public AGameModeBase
 public:
 	void ChangeMarkedTargetsCount(bool bSubtract = false);
 	void ChangeMarkedPurifiersCount(bool bSubtract = false);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWin();
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	int32 MarkedTargetsCount = 0;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	int32 MarkedPurifiersCount = 0;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	int32 TotalTargetsCount = 0;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	int32 TotalPurifiersCount = 0;
 	
 };
