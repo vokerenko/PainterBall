@@ -60,7 +60,9 @@ private:
 	float MinVerticalImpulseMagnitude;
 	float MaxVerticalImpulseMagnitude;
 
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	bool bIsMarked;
+
 	bool bTimerExpired;
 
 };

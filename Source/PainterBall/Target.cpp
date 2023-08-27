@@ -5,6 +5,8 @@
 #include "Components/BoxComponent.h"
 #include "Ball.h"
 #include "PurifierTarget.h"
+#include "PainterBallGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ATarget::ATarget()
@@ -90,6 +92,10 @@ void ATarget::OnMarked(ATarget* Target)
 		{
 			StaticMesh->SetMaterial(0, Target->StaticMesh->GetMaterial(0));
 			bIsMarked = true;
+			if (APainterBallGameModeBase* GM = Cast<APainterBallGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())))
+			{
+				GM->ChangeMarkedTargetsCount();
+			}
 		}
 		else if (APurifierTarget* Purifier = Cast<APurifierTarget>(Target))
 		{
@@ -97,6 +103,10 @@ void ATarget::OnMarked(ATarget* Target)
 			{
 				StaticMesh->SetMaterial(0, StartingMaterial);
 				bIsMarked = false;
+				if (APainterBallGameModeBase* GM = Cast<APainterBallGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())))
+				{
+					GM->ChangeMarkedTargetsCount(true);
+				}
 			}
 		}
 	}
@@ -108,6 +118,10 @@ void ATarget::OnMarked(ABall* Ball)
 	{
 		StaticMesh->SetMaterial(0, Ball->GetStaticMeshMaterial());
 		bIsMarked = true;
+		if (APainterBallGameModeBase* GM = Cast<APainterBallGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())))
+		{
+			GM->ChangeMarkedTargetsCount();
+		}
 	}
 
 }
