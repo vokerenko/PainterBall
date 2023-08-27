@@ -2,6 +2,8 @@
 
 
 #include "Target.h"
+#include "Components/BoxComponent.h"
+#include "Ball.h"
 
 // Sets default values
 ATarget::ATarget()
@@ -16,13 +18,17 @@ ATarget::ATarget()
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Cube"));
 	SetRootComponent(StaticMesh);
 	StaticMesh->SetSimulatePhysics(true);
+
+	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
+	Box->SetupAttachment(StaticMesh);
+
 }
 
 // Called when the game starts or when spawned
 void ATarget::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	Box->OnComponentBeginOverlap.AddDynamic(this, &ATarget::OnBoxBeginOverlap);
 }
 
 // Called every frame
@@ -33,6 +39,27 @@ void ATarget::Tick(float DeltaTime)
 	{
 		bTimerExpired = false;
 		StartTimer();
+	}
+}
+
+void ATarget::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex,
+	bool bFromSweep,
+	const FHitResult& SweepResult)
+{	
+	if (ABall* Ball = Cast<ABall>(OtherActor))
+	{
+		StaticMesh->SetMaterial(0, Ball->GetStaticMeshMaterial());
+		
+	}
+	else if (ATarget* Target = Cast<ATarget>(OtherActor))
+	{
+		if (Target != this)
+		{
+
+		}
 	}
 }
 

@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Target.generated.h"
 
+class UBoxComponent;
 UCLASS()
 class PAINTERBALL_API ATarget : public AActor
 {
@@ -15,15 +16,28 @@ public:
 	// Sets default values for this actor's properties
 	ATarget();
 
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	UBoxComponent* Box;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	UFUNCTION()
+		void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex,
+			bool bFromSweep,
+			const FHitResult& SweepResult);
+private:
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent* StaticMesh;
 

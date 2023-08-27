@@ -45,3 +45,8 @@ void ABall::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+UMaterialInterface* ABall::GetStaticMeshMaterial() const
+{
+	return StaticMesh->GetMaterial(0);
+}
+
