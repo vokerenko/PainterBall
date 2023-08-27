@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Target.generated.h"
 
+class ABall;
 class UBoxComponent;
 UCLASS()
 class PAINTERBALL_API ATarget : public AActor
@@ -46,6 +47,11 @@ private:
 
 	UFUNCTION()
 	void StartTimer();
+
+	void OnMarked(ATarget* Target);
+	void OnMarked(ABall* Ball);
+
+	UMaterialInterface* StartingMaterial;
 
 	FTimerHandle MoveDelayTimer;
 

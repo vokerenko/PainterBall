@@ -4,6 +4,7 @@
 #include "Target.h"
 #include "Components/BoxComponent.h"
 #include "Ball.h"
+#include "PurifierTarget.h"
 
 // Sets default values
 ATarget::ATarget()
@@ -29,6 +30,7 @@ void ATarget::BeginPlay()
 {
 	Super::BeginPlay();
 	Box->OnComponentBeginOverlap.AddDynamic(this, &ATarget::OnBoxBeginOverlap);
+	StartingMaterial = StaticMesh->GetMaterial(0);
 }
 
 // Called every frame
@@ -51,15 +53,11 @@ void ATarget::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent,
 {	
 	if (ABall* Ball = Cast<ABall>(OtherActor))
 	{
-		StaticMesh->SetMaterial(0, Ball->GetStaticMeshMaterial());
-		
+		OnMarked(Ball);
 	}
 	else if (ATarget* Target = Cast<ATarget>(OtherActor))
 	{
-		if (Target != this)
-		{
-
-		}
+		OnMarked(Target);
 	}
 }
 
@@ -78,5 +76,39 @@ void ATarget::StartTimer()
 	float Duration = 1.0f;
 	GetWorldTimerManager().ClearTimer(MoveDelayTimer);
 	GetWorldTimerManager().SetTimer(MoveDelayTimer, this, &ATarget::MoveRandomDirection, Duration);	
+}
+
+void ATarget::OnMarked(ATarget* Target)
+{
+	if (APurifierTarget* SelfPurifier = Cast<APurifierTarget>(this))
+	{
+
+	}
+	else
+	{
+		if (Target->bIsMarked && !bIsMarked)
+		{
+			StaticMesh->SetMaterial(0, Target->StaticMesh->GetMaterial(0));
+			bIsMarked = true;
+		}
+		else if (APurifierTarget* Purifier = Cast<APurifierTarget>(Target))
+		{
+			if (bIsMarked)
+			{
+				StaticMesh->SetMaterial(0, StartingMaterial);
+				bIsMarked = false;
+			}
+		}
+	}
+
+}
+void ATarget::OnMarked(ABall* Ball)
+{
+	if (!bIsMarked)
+	{
+		StaticMesh->SetMaterial(0, Ball->GetStaticMeshMaterial());
+		bIsMarked = true;
+	}
+
 }
 
