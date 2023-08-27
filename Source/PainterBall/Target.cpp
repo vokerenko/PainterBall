@@ -82,35 +82,27 @@ void ATarget::StartTimer()
 
 void ATarget::OnMarked(ATarget* Target)
 {
-	if (APurifierTarget* SelfPurifier = Cast<APurifierTarget>(this))
+	if (Target->bIsMarked && !bIsMarked)
 	{
-
-	}
-	else
-	{
-		if (Target->bIsMarked && !bIsMarked)
+		StaticMesh->SetMaterial(0, Target->StaticMesh->GetMaterial(0));
+		bIsMarked = true;
+		if (APainterBallGameModeBase* GM = Cast<APainterBallGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())))
 		{
-			StaticMesh->SetMaterial(0, Target->StaticMesh->GetMaterial(0));
-			bIsMarked = true;
+			GM->ChangeMarkedTargetsCount();
+		}
+	}
+	else if (APurifierTarget* Purifier = Cast<APurifierTarget>(Target))
+	{
+		if (bIsMarked && !Purifier->bIsMarked)
+		{
+			StaticMesh->SetMaterial(0, StartingMaterial);
+			bIsMarked = false;
 			if (APainterBallGameModeBase* GM = Cast<APainterBallGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())))
 			{
-				GM->ChangeMarkedTargetsCount();
-			}
-		}
-		else if (APurifierTarget* Purifier = Cast<APurifierTarget>(Target))
-		{
-			if (bIsMarked)
-			{
-				StaticMesh->SetMaterial(0, StartingMaterial);
-				bIsMarked = false;
-				if (APainterBallGameModeBase* GM = Cast<APainterBallGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())))
-				{
-					GM->ChangeMarkedTargetsCount(true);
-				}
+				GM->ChangeMarkedTargetsCount(true);
 			}
 		}
 	}
-
 }
 void ATarget::OnMarked(ABall* Ball)
 {

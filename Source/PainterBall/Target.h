@@ -22,8 +22,19 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void OnMarked(ATarget* Target);
+	virtual void OnMarked(ABall* Ball);
+protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	UBoxComponent* Box;
+
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	bool bIsMarked;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	UStaticMeshComponent* StaticMesh;
+
+	UMaterialInterface* StartingMaterial;
 
 public:	
 	// Called every frame
@@ -39,8 +50,6 @@ private:
 			const FHitResult& SweepResult);
 private:
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
-	UStaticMeshComponent* StaticMesh;
 
 	UFUNCTION()
 	void MoveRandomDirection();
@@ -48,10 +57,6 @@ private:
 	UFUNCTION()
 	void StartTimer();
 
-	void OnMarked(ATarget* Target);
-	void OnMarked(ABall* Ball);
-
-	UMaterialInterface* StartingMaterial;
 
 	FTimerHandle MoveDelayTimer;
 
@@ -60,8 +65,7 @@ private:
 	float MinVerticalImpulseMagnitude;
 	float MaxVerticalImpulseMagnitude;
 
-	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
-	bool bIsMarked;
+
 
 	bool bTimerExpired;
 

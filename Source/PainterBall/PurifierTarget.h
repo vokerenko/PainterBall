@@ -13,5 +13,8 @@ UCLASS()
 class PAINTERBALL_API APurifierTarget : public ATarget
 {
 	GENERATED_BODY()
-	
+
+private:
+	virtual void OnMarked(ATarget* Target) override;
+	virtual void OnMarked(ABall* Ball) override;
 };
