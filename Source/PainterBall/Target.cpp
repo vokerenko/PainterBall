@@ -5,8 +5,13 @@
 
 // Sets default values
 ATarget::ATarget()
+	: HorizontalImpulseMagnitude( 400.0f )
+	, MinVerticalImpulseMagnitude( 200.0f )
+	, MaxVerticalImpulseMagnitude( 300.0f )
+	, bIsMarked( false )
+	, bTimerExpired( true )
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+
 	PrimaryActorTick.bCanEverTick = true;
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Cube"));
 	SetRootComponent(StaticMesh);
@@ -24,6 +29,27 @@ void ATarget::BeginPlay()
 void ATarget::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (bTimerExpired)
+	{
+		bTimerExpired = false;
+		StartTimer();
+	}
+}
 
+void ATarget::MoveRandomDirection()
+{
+	FVector Impulse = FVector::ZeroVector;
+	Impulse.X = FMath::RandRange(-HorizontalImpulseMagnitude, HorizontalImpulseMagnitude);
+	Impulse.Y = FMath::RandRange(-HorizontalImpulseMagnitude, HorizontalImpulseMagnitude);
+	Impulse.Z = FMath::RandRange(MinVerticalImpulseMagnitude, MaxVerticalImpulseMagnitude);
+	StaticMesh->AddImpulse(Impulse, NAME_None, true);
+	bTimerExpired = true;
+}
+
+void ATarget::StartTimer()
+{
+	float Duration = 1.0f;
+	GetWorldTimerManager().ClearTimer(MoveDelayTimer);
+	GetWorldTimerManager().SetTimer(MoveDelayTimer, this, &ATarget::MoveRandomDirection, Duration);	
 }
 

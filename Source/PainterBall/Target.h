@@ -27,4 +27,20 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent* StaticMesh;
 
+	UFUNCTION()
+	void MoveRandomDirection();
+
+	UFUNCTION()
+	void StartTimer();
+
+	FTimerHandle MoveDelayTimer;
+
+	float HorizontalImpulseMagnitude;
+
+	float MinVerticalImpulseMagnitude;
+	float MaxVerticalImpulseMagnitude;
+
+	bool bIsMarked;
+	bool bTimerExpired;
+
 };
