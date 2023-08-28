@@ -15,6 +15,8 @@ class PAINTERBALL_API APurifierTarget : public ATarget
 	GENERATED_BODY()
 
 private:
+	// Gets called when marked purifier meets unmarked purifier
 	virtual void OnMarked(ATarget* Target) override;
+
 	virtual void OnMarked(ABall* Ball) override;
 };

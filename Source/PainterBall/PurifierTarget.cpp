@@ -5,6 +5,7 @@
 #include "PainterBallGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 
+
 void APurifierTarget::OnMarked(ATarget* Target)
 {
 	if (APurifierTarget* Purifier = Cast<APurifierTarget>(Target))

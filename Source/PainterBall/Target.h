@@ -17,10 +17,6 @@ public:
 	// Sets default values for this actor's properties
 	ATarget();
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnChangeColor();
-
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -43,6 +39,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Gets called when target changes color
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChangeColor();
+
 private:
 	UFUNCTION()
 		void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent,
@@ -51,8 +51,6 @@ private:
 			int32 OtherBodyIndex,
 			bool bFromSweep,
 			const FHitResult& SweepResult);
-private:
-
 
 	UFUNCTION()
 	void MoveRandomDirection();
@@ -61,6 +59,7 @@ private:
 	void StartTimer();
 
 
+private:
 	FTimerHandle MoveDelayTimer;
 
 	float HorizontalImpulseMagnitude;

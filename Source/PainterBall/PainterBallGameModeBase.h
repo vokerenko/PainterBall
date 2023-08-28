@@ -14,9 +14,11 @@ class PAINTERBALL_API APainterBallGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 public:
+	// Increment setters for marked targets
 	void ChangeMarkedTargetsCount(bool bSubtract = false);
 	void ChangeMarkedPurifiersCount(bool bSubtract = false);
 
+	// Gets called when player wins
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnWin();
 
