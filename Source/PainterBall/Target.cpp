@@ -84,7 +84,7 @@ void ATarget::OnMarked(ATarget* Target)
 {
 	if (Target->bIsMarked && !bIsMarked)
 	{
-		StaticMesh->SetMaterial(0, Target->StaticMesh->GetMaterial(0));
+		OnChangeColor();
 		bIsMarked = true;
 		if (APainterBallGameModeBase* GM = Cast<APainterBallGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())))
 		{
@@ -95,7 +95,7 @@ void ATarget::OnMarked(ATarget* Target)
 	{
 		if (bIsMarked && !Purifier->bIsMarked)
 		{
-			StaticMesh->SetMaterial(0, StartingMaterial);
+			OnChangeColor();
 			bIsMarked = false;
 			if (APainterBallGameModeBase* GM = Cast<APainterBallGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())))
 			{
@@ -108,7 +108,7 @@ void ATarget::OnMarked(ABall* Ball)
 {
 	if (!bIsMarked)
 	{
-		StaticMesh->SetMaterial(0, Ball->GetStaticMeshMaterial());
+		OnChangeColor();
 		bIsMarked = true;
 		if (APainterBallGameModeBase* GM = Cast<APainterBallGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())))
 		{

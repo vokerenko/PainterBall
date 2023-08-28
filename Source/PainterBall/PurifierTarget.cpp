@@ -11,7 +11,7 @@ void APurifierTarget::OnMarked(ATarget* Target)
 	{
 		if (bIsMarked && !Purifier->bIsMarked)
 		{
-			StaticMesh->SetMaterial(0, StartingMaterial);
+			OnChangeColor();
 			bIsMarked = false;
 			if (APainterBallGameModeBase* GM = Cast<APainterBallGameModeBase>(UGameplayStatics::GetGameMode(GetWorld())))
 			{

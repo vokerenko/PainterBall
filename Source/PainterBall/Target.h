@@ -17,6 +17,9 @@ public:
 	// Sets default values for this actor's properties
 	ATarget();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChangeColor();
+
 
 protected:
 	// Called when the game starts or when spawned
